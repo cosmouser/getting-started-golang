@@ -35,7 +35,6 @@ deploy:
     - internal/docker-push:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
-        cmd: /pipeline/source
         port: "5000"
         tag: latest
         repository: cosmouser/getting-started-golang
