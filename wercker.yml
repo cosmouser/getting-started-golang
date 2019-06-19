@@ -5,10 +5,23 @@ box:
 
 dev:
   steps:
+    - setup-go-workspace:
+      package-dir: github.com/cosmouser/getting-started-golang
+    
+    - script:
+      name: env
+      code: env
+
+    - script:
+      name: go get
+      code: |
+        cd $WERCKER_SOURCE_DIR
+        go version
+        go get -u github.com/olekukonko/tablewriter
+        export PATH=$WERCKER_SOURCE_DIR/bin:$PATH
+        
     - internal/watch:
-        code: |
-          go build ./...
-          ./source
+        code: go run main.go
         reload: true
 
 # Build definition

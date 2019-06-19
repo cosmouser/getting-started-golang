@@ -1,19 +1,18 @@
 package main
 
 import (
-	"encoding/json"
 	"github.com/olekukonko/tablewriter"
 	"log"
 	"net/http"
 )
 
 func cityHandler(res http.ResponseWriter, req *http.Request) {
-	randomNumbers := [][]int{
-		[]int{3214, 325342, 3432, 2323, 864732, 1256},
-		[]int{85212, 13456, 416, 3267, 6783, 9824},
-		[]int{52457, 3451, 1368, 89642, 7135, 476},
+	randomNumbers := [][]string{
+		[]string{"3214", "325342", "3432", "2323", "864732", "1256"},
+		[]string{"85212", "13456", "416", "3267", "6783", "9824"},
+		[]string{"52457", "3451", "1368", "89642", "7135", "476"},
 	}
-	table := tablewriter.NewWriter(w)
+	table := tablewriter.NewWriter(res)
 	table.SetHeader([]string{"Amsterdam", "Berlin", "New York", "San Francisco", "Tokyo", "Santa Cruz"})
 	table.AppendBulk(randomNumbers)
 	table.Render()
