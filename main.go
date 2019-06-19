@@ -2,20 +2,21 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/olekukonko/tablewriter"
 	"log"
 	"net/http"
 )
 
-type citiesResponse struct {
-	Cities []string `json:"cities"` // Cities capitalised to export it, otherwise json encoder will ignore it.
-}
-
 func cityHandler(res http.ResponseWriter, req *http.Request) {
-	cities := citiesResponse{
-		Cities: []string{"Amsterdam", "Berlin", "New York", "San Francisco", "Tokyo", "Santa Cruz"}}
-
-	res.Header().Set("Content-Type", "application/json; charset=utf-8")
-	json.NewEncoder(res).Encode(cities)
+	randomNumbers := [][]int{
+		[]int{3214, 325342, 3432, 2323, 864732, 1256},
+		[]int{85212, 13456, 416, 3267, 6783, 9824},
+		[]int{52457, 3451, 1368, 89642, 7135, 476},
+	}
+	table := tablewriter.NewWriter(w)
+	table.SetHeader([]string{"Amsterdam", "Berlin", "New York", "San Francisco", "Tokyo", "Santa Cruz"})
+	table.AppendBulk(randomNumbers)
+	table.Render()
 }
 
 func defaultHandler(res http.ResponseWriter, req *http.Request) {
@@ -25,7 +26,7 @@ func defaultHandler(res http.ResponseWriter, req *http.Request) {
 
 func main() {
 	http.HandleFunc("/", defaultHandler)
-	http.HandleFunc("/cities.json", cityHandler)
+	http.HandleFunc("/cities", cityHandler)
 	err := http.ListenAndServe(":5000", nil)
 	if err != nil {
 		log.Fatal("Unable to listen on port 5000 : ", err)
